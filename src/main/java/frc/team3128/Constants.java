@@ -525,44 +525,13 @@ public class Constants {
     }
 
     public static class LedConstants{
-        public static class Green{
-            public static final int HUE = 60;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Blue{
-            public static final int HUE = 120;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Red{
-            public static final int HUE = 0;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Yellow{
-            public static final int HUE = 30;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Purple{
-            public static final int HUE = 130;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 50;
-        }
-
-        public static class Off{
-            public static final int HUE = 0;
-            public static final int SATURATION = 0;
-            public static final int VALUE = 0;
-        }
-
-        public static final int PORT = 0; 
-        public static final int LENGTH = 288;
+        public static final int CANDLE_ID = 0;
+        
+        public static final int WHITE_VALUE = 0; //leds used don't have a white value
+        
+        public static final int STARTING_ID = 8;
+        public static final int UNDERGLOW_COUNT = 60;
+        public static final int ELEVATOR_COUNT = 0;
     }
 
 
