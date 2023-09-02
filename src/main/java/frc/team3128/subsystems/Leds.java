@@ -14,6 +14,7 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
+import java.awt.Color;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,13 @@ public class Leds extends SubsystemBase {
 
     private static Leds instance;
 
+    private int rgb;
+    private int red;
+    private int green;
+    private int blue;
+    private int m_rainbowFirstPixelHue = 10;
+    private int hue;
+
     public static Leds getInstance() {
         if (instance == null) {
             instance = new Leds();
@@ -33,8 +41,8 @@ public class Leds extends SubsystemBase {
 
     public enum Colors {
         OFF(0,0,0),
-        CONE(255,255,0),
-        CUBE(255,87,51),
+        CONE(255,125,0),
+        CUBE(255,0,200),
         HOLDING(255,255,255),
 
         AUTO(255,0,0),
@@ -46,8 +54,8 @@ public class Leds extends SubsystemBase {
 
         Colors(int r, int g, int b) {
             this.r = r;
-            this.g = b;
-            this.b = g;
+            this.g = g;
+            this.b = b;
         }
 
     }
@@ -76,8 +84,24 @@ public class Leds extends SubsystemBase {
     //Set All Leds
     public void setAllLeds(Colors color) {
         m_candle.setLEDs(color.r,color.g,color.b,LedConstants.WHITE_VALUE,LedConstants.STARTING_ID,LedConstants.UNDERGLOW_COUNT + LedConstants.ELEVATOR_COUNT);
-
     }
+
+    public void rainbow() {
+        for (int i = 0; i < LedConstants.UNDERGLOW_COUNT; i++) {
+            hue = (m_rainbowFirstPixelHue + (i * 180 / LedConstants.UNDERGLOW_COUNT)) % 180;
+            rgb = hsvToRgb(hue, 255, 128);
+            red = (rgb>>16)&0xFF;
+            green = (rgb>>8)&0xFF;
+            blue = rgb&0xFF;    
+            m_candle.setLEDs(red,green,blue,LedConstants.WHITE_VALUE,LedConstants.STARTING_ID+i,1);
+        }
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 180;
+    }
+
+    public int hsvToRgb(int hue, int saturation, int brightness) {
+        return Color.HSBtoRGB(hue, saturation, brightness);
+    } 
 
     
     

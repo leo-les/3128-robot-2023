@@ -44,7 +44,8 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void robotPeriodic(){
-        m_robotContainer.updateDashboard();        
+        m_robotContainer.updateDashboard();       
+        m_robotContainer.periodic(); 
     }
 
     @Override

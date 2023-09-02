@@ -38,14 +38,18 @@ import frc.team3128.common.hardware.input.NAR_XboxController;
 import frc.team3128.common.narwhaldashboard.NarwhalDashboard;
 import frc.team3128.common.utility.Log;
 import frc.team3128.subsystems.Intake;
+import frc.team3128.subsystems.Leds;
 import frc.team3128.subsystems.Manipulator;
 import frc.team3128.common.utility.NAR_Shuffleboard;
 import frc.team3128.subsystems.Pivot;
 import frc.team3128.subsystems.Swerve;
 import frc.team3128.subsystems.Telescope;
 import frc.team3128.subsystems.Vision;
+import frc.team3128.subsystems.Leds.Colors;
+
 import static frc.team3128.Constants.ArmConstants.*;
 
+import java.awt.Color;
 import java.util.function.BooleanSupplier;
 
 /**
@@ -62,6 +66,8 @@ public class RobotContainer {
     private Pivot pivot;
     private Telescope telescope;
     private Manipulator manipulator;
+
+    private Leds leds;
 
     private NAR_Joystick leftStick;
     private NAR_Joystick rightStick;
@@ -88,6 +94,8 @@ public class RobotContainer {
         pivot = Pivot.getInstance();
         telescope = Telescope.getInstance();
         manipulator = Manipulator.getInstance();
+
+        leds = Leds.getInstance();
         
         isAuto = new Trigger(() -> Vision.AUTO_ENABLED);
 
@@ -126,6 +134,7 @@ public class RobotContainer {
                                             new WaitCommand(0.35), CmdStopManip(),
                                             new InstantCommand(()-> Swerve.throttle = 0.8), 
                                             new CmdMoveArm(ArmPosition.NEUTRAL)));
+        controller.getButton("Back").onTrue(new InstantCommand(()-> leds.setUnderglowLeds(Colors.DRIVER)));
 
         controller.getButton("RightBumper").onTrue(CmdIntakeOuttake()).onFalse(CmdStopIntake());
         controller.getButton("LeftBumper").onTrue(CmdIntake()).onFalse(Commands.sequence(
@@ -212,7 +221,9 @@ public class RobotContainer {
         buttonPad.getButton(15).onTrue(
             //CmdShelfPickup(false)
             Commands.sequence(
-                new InstantCommand(()-> Vision.AUTO_ENABLED = false),
+            new InstantCommand(()-> leds.setUnderglowLeds(Colors.CUBE)),
+
+            new InstantCommand(()-> Vision.AUTO_ENABLED = false),
             new WaitUntilCommand(()-> Vision.AUTO_ENABLED),
             new InstantCommand(()-> pivot.startPID(288)),
             CmdManipGrab(false),
@@ -290,6 +301,8 @@ public class RobotContainer {
     }
 
     public void init() {
+        leds.setUnderglowLeds(Colors.OFF);
+        leds.rainbow();
         Vision.AUTO_ENABLED = false;
         if (DriverStation.getAlliance() == Alliance.Red) {
             buttonPad.getButton(4).onTrue(
@@ -368,5 +381,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("RightY",controller.getRightY());
         NAR_Shuffleboard.update();
         SmartDashboard.putNumber("Pitch",swerve.getPitch());
+    }
+
+    public void periodic() {
     }
 }

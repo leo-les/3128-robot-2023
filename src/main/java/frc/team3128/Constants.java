@@ -525,7 +525,7 @@ public class Constants {
     }
 
     public static class LedConstants{
-        public static final int CANDLE_ID = 0;
+        public static final int CANDLE_ID = 37;
         
         public static final int WHITE_VALUE = 0; //leds used don't have a white value
         
