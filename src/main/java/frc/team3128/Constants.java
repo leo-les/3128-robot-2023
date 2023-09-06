@@ -530,8 +530,28 @@ public class Constants {
         public static final int WHITE_VALUE = 0; //leds used don't have a white value
         
         public static final int STARTING_ID = 8;
-        public static final int UNDERGLOW_COUNT = 60;
-        public static final int ELEVATOR_COUNT = 0;
+        public static final int PIVOT_COUNT = 60;
+
+        public enum Colors {
+            OFF(0,0,0),
+            CONE(255,255,0),
+            CUBE(255,87,51),
+            HOLDING(255,255,255),
+    
+            AUTO(255,0,0),
+            DEFAULT(0,255,0);
+    
+            public final int r;
+            public final int b;
+            public final int g;
+    
+            Colors(int r, int g, int b) {
+                this.r = r;
+                this.g = g;
+                this.b = b;
+            }
+    
+        }
     }
 
 
