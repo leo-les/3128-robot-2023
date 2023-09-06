@@ -136,10 +136,15 @@ public class RobotContainer {
                                             new CmdMoveArm(ArmPosition.NEUTRAL)));
 
         controller.getButton("RightBumper").onTrue(CmdIntakeOuttake()).onFalse(CmdStopIntake());
-        controller.getButton("LeftBumper").onTrue(CmdIntake()).onFalse(Commands.sequence(
-            new InstantCommand(() -> intake.set(Intake.objectPresent ? IntakeConstants.STALL_POWER : 0), intake),
-            CmdExtendIntake(Intake.IntakeState.RETRACTED),
-            new WaitUntilCommand(()-> intake.atSetpoint())));
+        controller.getButton("LeftBumper").onTrue(Commands.sequence(
+                                                        CmdIntake(),
+                                                        new InstantCommand(()-> leds.setPivotLeds(Colors.HOLDING))))
+                                                    .onFalse(Commands.sequence(
+                                                        new InstantCommand(() -> intake.set(Intake.objectPresent ? IntakeConstants.STALL_POWER : 0), intake),
+                                                        CmdExtendIntake(Intake.IntakeState.RETRACTED),
+                                                        new WaitUntilCommand(()-> intake.atSetpoint()),
+                                                        new InstantCommand(()-> leds.setPivotLeds(Colors.DEFAULT))));
+
 
         controller.getUpPOVButton().onTrue(new InstantCommand(()-> {
             CmdSwerveDrive.rSetpoint = DriverStation.getAlliance() == Alliance.Red ? 0 : 180;
@@ -215,6 +220,7 @@ public class RobotContainer {
             new WaitUntilCommand(()-> Vision.AUTO_ENABLED),
             new InstantCommand(()-> pivot.startPID(283.5)),
             CmdManipGrab(true),
+            new InstantCommand(()-> leds.setPivotLeds(Colors.HOLDING)),
             new WaitCommand(0.333),
             new CmdMoveArm(ArmPosition.NEUTRAL),
             new InstantCommand(()-> leds.setPivotLeds(Colors.DEFAULT))
@@ -228,6 +234,7 @@ public class RobotContainer {
             new WaitUntilCommand(()-> Vision.AUTO_ENABLED),
             new InstantCommand(()-> pivot.startPID(288)),
             CmdManipGrab(false),
+            new InstantCommand(()-> leds.setPivotLeds(Colors.HOLDING)),
             new WaitCommand(0.333),
             new CmdMoveArm(ArmPosition.NEUTRAL),
             new InstantCommand(()-> leds.setPivotLeds(Colors.DEFAULT))
@@ -304,7 +311,7 @@ public class RobotContainer {
     }
 
     public void init() {
-        leds.setPivotLeds(Colors.OFF);
+        leds.setPivotLeds(Colors.DEFAULT);
         Vision.AUTO_ENABLED = false;
         if (DriverStation.getAlliance() == Alliance.Red) {
             buttonPad.getButton(4).onTrue(
