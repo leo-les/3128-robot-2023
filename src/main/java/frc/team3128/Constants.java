@@ -530,12 +530,12 @@ public class Constants {
         public static final int WHITE_VALUE = 0; //leds used don't have a white value
         
         public static final int STARTING_ID = 8;
-        public static final int PIVOT_COUNT = 60;
+        public static final int PIVOT_COUNT = 100;
 
         public enum Colors {
             OFF(0,0,0),
             CONE(255,255,0),
-            CUBE(255,87,51),
+            CUBE(255,0,255),
             HOLDING(255,255,255),
     
             AUTO(255,0,0),
