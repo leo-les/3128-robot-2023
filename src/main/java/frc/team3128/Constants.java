@@ -525,44 +525,33 @@ public class Constants {
     }
 
     public static class LedConstants{
-        public static class Green{
-            public static final int HUE = 60;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
+        public static final int CANDLE_ID = 37;
+        
+        public static final int WHITE_VALUE = 0; //leds used don't have a white value
+        
+        public static final int STARTING_ID = 8;
+        public static final int PIVOT_COUNT = 100;
 
-        public static class Blue{
-            public static final int HUE = 120;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
+        public enum Colors {
+            OFF(0,0,0),
+            CONE(255,255,0),
+            CUBE(255,0,255),
+            HOLDING(255,255,255),
+    
+            AUTO(255,0,0),
+            DEFAULT(0,255,0);
+    
+            public final int r;
+            public final int b;
+            public final int g;
+    
+            Colors(int r, int g, int b) {
+                this.r = r;
+                this.g = g;
+                this.b = b;
+            }
+    
         }
-
-        public static class Red{
-            public static final int HUE = 0;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Yellow{
-            public static final int HUE = 30;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 255;
-        }
-
-        public static class Purple{
-            public static final int HUE = 130;
-            public static final int SATURATION = 255;
-            public static final int VALUE = 50;
-        }
-
-        public static class Off{
-            public static final int HUE = 0;
-            public static final int SATURATION = 0;
-            public static final int VALUE = 0;
-        }
-
-        public static final int PORT = 0; 
-        public static final int LENGTH = 288;
     }
 
 
