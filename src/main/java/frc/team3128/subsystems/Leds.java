@@ -46,7 +46,14 @@ public class Leds extends SubsystemBase {
 
     //Set Elevator Leds
     public void setPivotLeds(Colors color) {
-        m_candle.setLEDs(color.r,color.g,color.b,LedConstants.WHITE_VALUE,LedConstants.STARTING_ID,LedConstants.PIVOT_COUNT);
+        if (color.animation) {
+            m_candle.animate(new RainbowAnimation(1,1,LedConstants.PIVOT_COUNT,false,LedConstants.STARTING_ID),0);
+        }
+        else {
+            m_candle.animate(null, 0);
+            m_candle.setLEDs(color.r,color.g,color.b,LedConstants.WHITE_VALUE,LedConstants.STARTING_ID,LedConstants.PIVOT_COUNT);
+
+        }
     }
 
     

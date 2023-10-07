@@ -533,22 +533,24 @@ public class Constants {
         public static final int PIVOT_COUNT = 100;
 
         public enum Colors {
-            OFF(0,0,0),
-            CONE(255,255,0),
-            CUBE(255,0,255),
-            HOLDING(255,255,255),
+            OFF(0,0,0,false),
+            CONE(255,255,0,false),
+            CUBE(255,0,255,false),
+            HOLDING(255,0,0,false),
     
-            AUTO(255,0,0),
-            DEFAULT(0,255,0);
+            AUTO(0,0,0,true),
+            DEFAULT(0,0,225,false);
     
             public final int r;
             public final int b;
             public final int g;
+            public final boolean animation;
     
-            Colors(int r, int g, int b) {
+            Colors(int r, int g, int b,boolean animation) {
                 this.r = r;
                 this.g = g;
                 this.b = b;
+                this.animation = animation;
             }
     
         }
